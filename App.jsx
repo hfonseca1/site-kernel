@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-export default function MultiReturnImageUpload() {
+export default function App() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [images, setImages] = useState({});
 
@@ -24,7 +24,7 @@ export default function MultiReturnImageUpload() {
       },
     })
       .then(response => {
-        setImages(response.data);  // O backend retorna as imagens em base64
+        setImages(response.data);
       })
       .catch(error => {
         console.error('Erro ao enviar imagem:', error);
@@ -33,23 +33,26 @@ export default function MultiReturnImageUpload() {
 
   return (
     <div>
-      <h2>Upload de Imagem (usando Axios)</h2>
+      <h2>Upload</h2>
 
       <input type="file" accept="image/*" onChange={handleFileChange} />
       <button onClick={handleUpload}>Enviar Imagem</button>
 
-      <div style={{ display: 'flex', flexWrap: 'wrap', marginTop: '20px' }}>
+      <div style={{ display: 'flex', marginTop: '20px', justifyContent: "center" }}>
         {Object.entries(images).map(([tipo, base64], index) => (
           <div key={index} style={{ margin: '10px' }}>
             <h4>{tipo}</h4>
             <img
               src={`data:image/jpeg;base64,${base64}`}
               alt={tipo}
-              style={{ maxWidth: '300px' }}
+              style={{ width: 384 }}
             />
+
+            {console.log(index)}
           </div>
         ))}
       </div>
     </div>
+
   );
 }
